@@ -1,4 +1,4 @@
-function Cart(oldCart) {
+module.exports = function Cart(oldCart) {
   this.products = oldCart.products || {};
   this.totalQty = oldCart.totalQty || 0;
   this.totalPrice = oldCart.totalPrice || 0.00;
