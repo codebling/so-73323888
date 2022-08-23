@@ -31,7 +31,7 @@ app.get("/add_to_cart/:name", async (req, res) => {
 
   req.session.cart = cart;
   // cart.addDrink(singleDrink);
-  cart.addDrink({name, price: '' + Math.random() * 5,});
+  cart.addDrink({_id: Math.random(), name, price: '' + Math.random() * 5,});
   console.log(`route log`, req.session.cart,req.session.cookie)
   res.send(cart);
 });  
