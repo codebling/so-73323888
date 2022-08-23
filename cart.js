@@ -6,6 +6,7 @@ module.exports = function Cart(oldCart) {
   this.addDrink = function(item) {
     let storeItem = this.products;
     if (!storeItem.hasOwnProperty("item")) {
+      console.log('hasownproperty')
       
       storeItem = this.products = {item: item};
       this.totalQty = 1;
@@ -31,7 +32,12 @@ module.exports = function Cart(oldCart) {
       storeItem.price = parseFloat(storeItem.item.price * storeItem.currentQty);
       this.totalQty++;
       this.totalPrice += parseFloat(storeItem.item.price);
+      console.log(`storeItme: `, storeItem);
+      console.log(`storeItem.currentQty: ${storeItem.currentQty}`);
+      console.log(`storeItem.price: ${storeItem.price}`);
+
     }
+    console.log(`this`,this)
   }
 }
 
