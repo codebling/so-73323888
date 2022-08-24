@@ -1,43 +1,25 @@
-module.exports = function Cart(oldCart) {
-  this.products = oldCart.products || {};
-  this.totalQty = oldCart.totalQty || 0;
-  this.totalPrice = oldCart.totalPrice || 0.00;
+module.exports = class Cart {
+  items;
+  constructor(oldCart) {
+    this.items = oldCart?.items ?? [];
+  }
 
-  this.addDrink = function(item) {
-    let storeItem = this.products;
-    if (!storeItem.hasOwnProperty("item")) {
-      console.log('hasownproperty')
-      
-      storeItem = this.products = {item: item};
-      this.totalQty = 1;
-      this.totalPrice = parseFloat(item.price);
-
-    } else {
-
-      storeItem = {item: item};
-      this.products = storeItem;
-      Object.defineProperties(storeItem, {
-          currentQty: {
-              enumerable: false,
-              writable: true
-          },
-          price: {
-              enumerable: false,
-              writable: true
-          }
-      },
-      
-      );
-      storeItem.currentQty++;
-      storeItem.price = parseFloat(storeItem.item.price * storeItem.currentQty);
-      this.totalQty++;
-      this.totalPrice += parseFloat(storeItem.item.price);
-      console.log(`storeItme: `, storeItem);
-      console.log(`storeItem.currentQty: ${storeItem.currentQty}`);
-      console.log(`storeItem.price: ${storeItem.price}`);
-
+  addDrink(item) {
+    let cartItem = this.items.find(i => i._id == item._id);
+    if (cartItem == null) {
+      cartItem = {
+        _id: item._id,
+        qty: 0,
+        unitPrice: parseFloat(item.price),
+      };
+      this.items.push(cartItem);
     }
-    console.log(`this`,this)
+    cartItem.qty++;
+  }
+  get totalQty() {
+    return this.items.reduce( (totalQty, item) => totalQty += item.qty, 0);
+  }
+  get totalPrice() {
+    return this.items.reduce( (totalPrice, item) => totalPrice += item.qty * item.unitPrice, 0.00);
   }
 }
-
